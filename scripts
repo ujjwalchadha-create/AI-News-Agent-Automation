@@ -1,1 +1,35 @@
+import openai
+
+def summarize_article(article_text):
+    response = openai.ChatCompletion.create(
+      model="gpt-4",
+      messages=[{"role": "user", "content": f"Summarize this:\n{article_text}"}]
+    )
+    return response.choices[0].message.content
+
+# Use your article text here
+article = "Your article snippet..."
+print(summarize_article(article))
+
+# Script Templates for AI Automation
+
+## 1. Python Script for Text Processing
+This script is used to clean or preprocess article snippets before sending them to an AI model for summarization or analysis.
+
+
+---
+
+## 2. API Call Template for AI Requests
+Sample code to make requests to AI APIs such as OpenAI’s GPT-4.
+
+
+---
+
+## 3. Data Parsing Script
+Script to parse JSON data fetched from APIs before passing it to social media posts.
+
+
+---
+
+Feel free to customize these scripts further for your specific needs. Let me know if you'd like me to generate additional scripts or explanations!
 
