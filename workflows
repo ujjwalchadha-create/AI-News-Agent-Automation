@@ -1,1 +1,8 @@
+Schedule (Daily)
+   └─> RSS by Zapier (Fetch news)
+        └─> (Optional: Filter/Formatter)
+            └─> (Optional: AI Summarization)
+                └─> Formatter (Social Caption)
+                    └─> Social Media Post (LinkedIn/Twitter)
+                        └─> (Optional: Admin Notification)
 
