@@ -1,23 +1,23 @@
-# AI-News-Agent-Automation
-This project automates the process of discovering, summarizing, and posting the latest news related to drone technology and UAV developments. Using AI-powered tools and workflow automation platforms such as Taskade AI, n8n, and ChatGPT API.
-
 # AI News Agent Automation
 
-This project automates the discovery, summarization, formatting, and posting of the latest drone and UAV industry news using AI-powered tools and workflow automation platforms such as Taskade AI, n8n, and ChatGPT API.
+This project leverages Zapier automation to discover, summarize, and post the latest drone and UAV technology news to social media.
 
-## Features
+## Steps Automated
 
-- **News Discovery:** Automatically searches for recent articles based on keywords such as "latest drone news", "UAV technology", and "DGCA drones India".
-- **AI Summarization:** Condenses articles into readable summaries with hashtags and trending keywords.
-- **Content Formatting:** Generates engaging, social media-ready captions.
-- **Social Media Posting:** Posts content to LinkedIn and Twitter at scheduled times.
+1. **News Discovery:** Fetches daily articles on "drone news," "UAV technology," and "DGCA drones India" via Google News RSS in Zapier.
+2. **AI Summarization:** Optionally integrates with an AI API for content summarization (future step).
+3. **Social Media Posting:** Formats and auto-posts to LinkedIn, Twitter, or saves for review.
 
-Repository contains workflow exports, scripts, screenshots, and documentation.
+## Repository Structure
 
----
+- `/workflows` – Zapier workflow JSON exports and configuration
+- `/scripts` – Any helper scripts if needed
+- `/docs` – Screenshots and project documentation
 
-## Structure
+## Getting Started
 
-- `/workflows` - Automation workflow files or exports
-- `/scripts` - Code scripts (Python, etc.)
-- `/docs` - Documentation and screenshots
+1. Clone this repository.
+2. Review the README and folder structure.
+3. Import the Zapier workflow (if available) to recreate automation.
+
+This repository demonstrates a real-world use case for AI and automation tools in news aggregation and social posting.
