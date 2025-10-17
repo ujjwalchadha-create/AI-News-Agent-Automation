@@ -31,5 +31,100 @@ Script to parse JSON data fetched from APIs before passing it to social media po
 
 ---
 
+Here is all the provided scripts formatted as a Markdown (`.md`) file for your `/scripts` folder:
+
+```markdown
+# AI Automation Scripts
+
+## 1. News Discovery Script  
+Fetches articles from Google News RSS feed.
+
+```
+import feedparser
+
+def fetch_news_rss(feed_url, max_articles=5):
+    feed = feedparser.parse(feed_url)
+    articles = []
+    for entry in feed.entries[:max_articles]:
+        articles.append({
+            'title': entry.title,
+            'link': entry.link,
+            'published': entry.published,
+            'summary': entry.summary
+        })
+    return articles
+
+# Example usage
+rss_url = 'https://news.google.com/rss/search?q=drone+news+UAV+India'
+news = fetch_news_rss(rss_url)
+for article in news:
+    print(article['title'], article['link'])
+```
+
+---
+
+## 2. AI Summarization Script  
+Summarizes article text using OpenAI GPT API.
+
+```
+import openai
+
+def summarize_article(article_text):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": f"Summarize this in 2-3 sentences:\n{article_text}"}]
+    )
+    return response.choices.message.content
+
+# Example
+summary = summarize_article("Your article text here...")
+print(summary)
+```
+
+---
+
+## 3. Content Formatting Script  
+Prepares social media post captions.
+
+```
+def create_social_caption(summary, hashtags, link):
+    hook = "🚀 Latest Drone News Update!"
+    hashtags_str = " ".join([f"#{tag}" for tag in hashtags])
+    caption = f"{hook}\n\n{summary}\n\n{hashtags_str}\n\nRead more: {link}"
+    return caption
+
+# Example
+caption = create_social_caption(
+    "This week, major advances in UAV technology were announced.",
+    ["DroneTech", "UAV", "Innovation"],
+    "http://example.com/article"
+)
+print(caption)
+```
+
+---
+
+## 4. Social Media Posting Preparation Script  
+Generates JSON payload for API posting.
+
+```
+def prepare_post_payload(caption, image_url=None):
+    payload = {
+        "text": caption,
+        "image_url": image_url
+    }
+    return payload
+
+# Example usage
+post_payload = prepare_post_payload(caption, "http://example.com/image.jpg")
+print(post_payload)
+```
+
+---
+
+Save this as something like `ai_automation_scripts.md` in your `/scripts` directory. This organizes all your core scripts for easy reference and future development.
+
+Let me know if you want me to create standalone `.py` files or help with integration!
+
 Feel free to customize these scripts further for your specific needs. Let me know if you'd like me to generate additional scripts or explanations!
 
