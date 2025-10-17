@@ -6,3 +6,80 @@ Schedule (Daily)
                     └─> Social Media Post (LinkedIn/Twitter)
                         └─> (Optional: Admin Notification)
 
+
+# Zapier Workflow Outline
+
+## 1. Trigger: Schedule by Zapier
+**What it does:**  
+Triggers your automation every day at your chosen time (e.g., 9 AM IST).
+
+**How to configure:**  
+- App: Schedule by Zapier  
+- Trigger: Every Day  
+- Set your desired time zone and hour
+
+## 2. Action: RSS by Zapier
+**What it does:**  
+Fetches the latest articles from Google News RSS.
+
+**How to configure:**  
+- App: RSS by Zapier  
+- Event: New Item in Feed  
+- Feed URL (example):  
+  `https://news.google.com/rss/search?q=drone+news+UAV+India`
+
+This action provides article fields: Title, Link, Publication Date.
+
+## 3. Action: Filter by Zapier (Optional)  
+*(If you only want specific articles)*
+
+**What it does:**  
+Limits to articles that meet certain criteria (e.g., only from today).
+
+**How to configure:**  
+- App: Filter by Zapier  
+- Set rules, such as date is today, or custom keyword filter.
+
+## 4. Action: Formatter by Zapier (Text)  
+**What it does:**  
+Formats the article content for the next steps (optional).
+
+**How to configure:**  
+- App: Formatter – Text  
+- You can extract a summary, clean up text, or prepare for AI summarization.
+
+## 5. Action: AI Summarization (Optional/Future Step)  
+**What it does:**  
+Sends article text to OpenAI/ChatGPT or any AI summarizer.
+
+**How to configure:**  
+- App: OpenAI (Zapier’s integration)  
+- Send the article title and snippet; get a summary, hashtags, and keywords back.
+
+## 6. Action: Create Social Post  
+**What it does:**  
+Prepares the final caption, attaches hashtags, and generates a post.
+
+**How to configure:**  
+- Use Formatter by Zapier or a code step to create a social media caption:  
+  - Hook line  
+  - Short 1–2 sentence summary  
+  - Hashtags  
+  - Article link with a CTA
+
+## 7. Action: Social Posting  
+**What it does:**  
+Posts to LinkedIn, Twitter, or other platforms.
+
+**How to configure:**  
+- Use the LinkedIn/Twitter integration in Zapier.  
+- Choose “Create Post” for LinkedIn or “Create Tweet” for Twitter.  
+- Map the output from the previous step.
+
+## 8. (Optional) Action: Email or Slack Notification  
+Notifies admin with summary report.
+
+---
+
+## Workflow Representation
+
