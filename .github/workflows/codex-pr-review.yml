@@ -1,0 +1,108 @@
+name: Codex PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  codex:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    outputs:
+      final_message: ${{ steps.run_codex.outputs.final-message }}
+
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v5
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          persist-credentials: false
+
+      - name: Fetch PR refs
+        env:
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          git fetch --no-tags origin \
+            "$PR_BASE_REF" \
+            "+refs/pull/$PR_NUMBER/head"
+
+      - name: Run Codex review
+        id: run_codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":read-only"
+          prompt: |
+            You are reviewing a GitHub pull request.
+
+            Repository:
+            ${{ github.repository }}
+
+            Pull request:
+            #${{ github.event.pull_request.number }}
+
+            Title:
+            ${{ github.event.pull_request.title }}
+
+            Description:
+            ${{ github.event.pull_request.body }}
+
+            Review ONLY the changes introduced by this pull request.
+
+            Compare:
+            ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+
+            Focus on:
+            1. Security vulnerabilities and exposed secrets
+            2. Broken functionality
+            3. Duplicate actions or duplicate news/social posts
+            4. API failures, timeouts, and retry problems
+            5. Data loss or silently dropped workflow events
+            6. Missing or inadequate tests
+            7. Documentation/configuration inconsistencies
+
+            Do not modify files.
+            Do not create commits.
+            Do not merge the pull request.
+
+            Be concise and specific.
+
+            For each finding include:
+            - Severity: Critical, High, Medium, Low, or Info
+            - File
+            - Line or relevant section
+            - Problem
+            - Why it matters
+            - Recommended direction for fixing it
+
+            If you find no meaningful problems, say:
+            "No significant issues found in this PR."
+            
+  post-review:
+    runs-on: ubuntu-latest
+    needs: codex
+
+    if: needs.codex.outputs.final_message != ''
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Post Codex review to PR
+        uses: actions/github-script@v7
+        env:
+          CODEX_FINAL_MESSAGE: ${{ needs.codex.outputs.final_message }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: "## 🤖 Codex PR Review\n\n" + process.env.CODEX_FINAL_MESSAGE,
+            });
