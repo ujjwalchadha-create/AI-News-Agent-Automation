@@ -21,3 +21,5 @@ This project leverages Zapier automation to discover, summarize, and post the la
 3. Import the Zapier workflow (if available) to recreate automation.
 
 This repository demonstrates a real-world use case for AI and automation tools in news aggregation and social posting.
+
+Codex PR review bot test.
